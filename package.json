@@ -2,10 +2,10 @@
   "name": "food_order_backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
-    "dev":"nodemon src/server.ts"
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,12 +18,12 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^2.0.0",
     "@types/node": "^25.0.10",
-    "nodemon": "^3.1.11",
     "ts-node-dev": "^2.0.0",
     "tsc-watch": "^7.2.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "mongoose": "^9.1.5"
   }
