@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 import { timeStamp } from 'node:console';
 
-interface vendorDoc extends Document{
+interface IVendorDoc extends Document{
     name: string;
     ownerName: string;
     foodType: [string];
@@ -37,12 +37,29 @@ const vendorSchema = new Schema({
         ref: 'food'
     }],
     lat: { type: Number},
-    lng: {type: Number}
+    lng: {type: Number},
 },{timestamps:false})
 
 vendorSchema.set('toJSON', { virtuals: true });
 
-const vendor = mongoose.model<vendorDoc>('vendor',vendorSchema)
+const vendor = mongoose.model<IVendorDoc>('vendor',vendorSchema)
+
+interface UserDoc extends Document{
+    username:string;
+    email:string;
+    dob:Date;
+    isActive:boolean
+}
+
+const userSchema = new mongoose.Schema({
+    username:{type:String,required:true},
+    email:{type:String,required:true},
+    dob:{type:Date},
+    isActive:{type:Boolean,required:true,default:true}
+}, { timestamps: true })
+
+const userModel = mongoose.model<UserDoc>('user',userSchema)
+
 
 export {vendor}
 

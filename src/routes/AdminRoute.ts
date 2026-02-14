@@ -1,5 +1,5 @@
 import express,{Request,Response,NextFunction} from "express"
-import { createVendor,getVendors,getVendorById } from "../controllers"
+import { createVendor,getVendors,getVendorById } from "../controllers/AdminController.js"
 
 
 const router = express.Router()

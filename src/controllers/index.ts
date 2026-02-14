@@ -1,2 +1,2 @@
-export {createVendor,getVendors,getVendorById} from "./AdminController"
-// export * from "./VendorController"
+// export {createVendor,getVendors,getVendorById} from "./AdminController"
+// export {vendorLogin} from "./VendorController"

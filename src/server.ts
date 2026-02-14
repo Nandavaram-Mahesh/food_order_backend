@@ -1,8 +1,9 @@
 import type {Request,Response,NextFunction} from "express"
 
-import {app,PORT} from "./config"
-import { AdminRoute,VendorRoute } from "./routes"
-import { connectDb } from "./config/db.config"
+import {app,PORT} from "./config/app.config.js"
+import { AdminRoute } from "./routes/AdminRoute.js"
+import {VendorRoute} from "./routes/VendorRoute.js"
+import { connectDb } from "./config/db.config.js"
 
 const startServer = async()=>{
     

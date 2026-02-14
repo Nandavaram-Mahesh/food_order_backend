@@ -1,8 +1,10 @@
 import dotenv from "dotenv"
+import express from "express"
+
 dotenv.config({path:'.env.dev'})
 
-import express from "express"
-import { AdminRoute, VendorRoute } from "../routes"
+import { AdminRoute} from "../routes/AdminRoute.js"
+import {VendorRoute} from "../routes/VendorRoute.js"
 
 
 export const app = express()

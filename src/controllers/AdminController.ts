@@ -1,10 +1,23 @@
 import express,{Request,Response,NextFunction} from "express"
-import { CreateVandorInput } from "../dto"
-import { vendor } from "../models"
+import { CreateVendorInput } from "../dto/vendor.dto.js"
+import { vendor} from "../models/vendor.models.js"
+
+export const findVendor = async (id:string|undefined , email?:string)=>{
+    if(email){
+        return await vendor.findOne({email:email})
+    }
+    return await vendor.findById(id)
+}
 
 export const createVendor = async (req:Request,res:Response,next:NextFunction)=>{
-    const {name,ownerName,foodType,pincode,address,phone,email,password} = <CreateVandorInput>req.body
+    const {name,ownerName,foodType,pincode,address,phone,email,password} = <CreateVendorInput>req.body
     
+    let existingVendor = await findVendor('',email)
+
+    if (existingVendor!==null){
+        return res.json({"message":`User with emailId:${email} already exists`})
+    }
+
     const createdVendor = await vendor.create(
         {
         name: name,
@@ -25,14 +38,23 @@ export const createVendor = async (req:Request,res:Response,next:NextFunction)=>
 
     return res.json(createdVendor)
 
-    // return res.json({name,ownerName,foodType,pincode,address,phone,email,password})
 }
 
 export const getVendors = async (req:Request,res:Response,next:NextFunction)=>{
+    const vendors = await vendor.find()
 
+    if(vendors!==null){
+        return res.json(vendors)
+    }
+    return res.json({"message":"Vendor data not available"})
 }
 
 export const getVendorById = async (req:Request,res:Response,next:NextFunction)=>{
-
+    const vendor_id = req.params.id as string
+    const existingVendor = await findVendor(vendor_id)
+    if (existingVendor){
+        return res.json(existingVendor)
+    }
+    return res.json({"message":`Vendor with Id:${vendor_id} not available`}) 
 }
 
