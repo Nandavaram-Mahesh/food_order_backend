@@ -21,25 +21,25 @@ export const ValidatePassword = async (enteredPassword: string, savedPassword: s
     return await GeneratePassword(enteredPassword, salt) === savedPassword;
 }
 
-export const GenerateSignature = async (payload: AuthPayload) => {
+// export const GenerateSignature = async (payload: AuthPayload) => {
 
-   return jwt.sign(payload, APP_SECRET, { expiresIn: '90d'});
+//    return jwt.sign(payload, APP_SECRET, { expiresIn: '90d'});
 
-}
+// }
 
-export const ValidateSignature  = async(req: Request) => {
+// export const ValidateSignature  = async(req: Request) => {
 
-    const signature = req.get('Authorization');
+//     const signature = req.get('Authorization');
 
-    if(signature){
-        try {
-            const payload = await jwt.verify(signature.split(' ')[1], APP_SECRET) as AuthPayload; 
-            req.user = payload;
-            return true;
+//     if(signature){
+//         try {
+//             const payload = await jwt.verify(signature.split(' ')[1], APP_SECRET) as AuthPayload; 
+//             req.user = payload;
+//             return true;
 
-        } catch(err){
-            return false
-        } 
-    }
-    return false
-};
+//         } catch(err){
+//             return false
+//         } 
+//     }
+//     return false
+// };
