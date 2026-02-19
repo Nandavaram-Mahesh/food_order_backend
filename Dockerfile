@@ -1,23 +1,32 @@
-# 1️⃣ Use official Node image
-FROM node:20
+FROM node:20.20.0-alpine3.23 AS base
 
-# 2️⃣ Create app directory inside container
+# Stage 1 : Build Stuff
+FROM base AS builder
+
 WORKDIR /app
 
-# 3️⃣ Copy package files
-COPY package*.json ./
+COPY package*.json .
+COPY tsconfig.json .
 
-# 4️⃣ Install dependencies
-RUN npm install
+RUN npm install 
 
-# 5️⃣ Copy rest of application code
-COPY . .
+COPY src/ src/
+COPY .env .
+COPY .env.dev .
 
 RUN npm run build
 
-# 6️⃣ Expose the port your app runs on
+# Stage 2 : Runner
+FROM base AS runner
+
+WORKDIR /app
+
+COPY --from=builder /app/dist dist/
+COPY --from=builder /app/package*.json .
+COPY --from=builder /app/.env.dev .
+
+RUN npm install --omit=dev
+
 EXPOSE 5000
 
-
-# # 7️⃣ Start the application
-CMD ["node", "dist/server.js"]
+CMD ["node","dist/server.js"]
