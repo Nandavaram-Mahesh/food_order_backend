@@ -3,9 +3,6 @@ import express from "express"
 
 dotenv.config({path:'.env.dev'})
 
-import { AdminRoute} from "../routes/AdminRoute.js"
-import {VendorRoute} from "../routes/VendorRoute.js"
-
 
 export const app = express()
 export const PORT = process.env.PORT || 3000

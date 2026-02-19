@@ -1,14 +1,23 @@
 import mongoose from "mongoose"
 
+import {config} from './config.js'
 
-const MONGO_URI:string= "mongodb+srv://express:express123@cluster0.fozjzpf.mongodb.net/food_order_backend"
 
 const connectDb = async()=>{
     try{
-        await mongoose.connect(MONGO_URI).then(()=>console.log("Connected to Database Successfully"))
+        
+        mongoose.connection.on("connected", () => {
+        console.log("Connected to database successfully");
+        });
+
+        mongoose.connection.on("error", (err) => {
+        console.log("Error in connecting to database.", err);
+        });
+        
+        await mongoose.connect(config.databaseUrl as string)
     }
     catch(err){
-        console.log(err);
+         console.error("Failed to connect to database.", err);
         process.exit(1);
     }
 }
